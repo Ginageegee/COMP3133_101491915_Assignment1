@@ -14,7 +14,7 @@ const employeeSchema = new mongoose.Schema({
     updated_at:   { type: Date, default: Date.now }
 });
 
-// Mongoose v7+ — no next() needed
+
 employeeSchema.pre('save', function () {
     this.updated_at = new Date();
 });
