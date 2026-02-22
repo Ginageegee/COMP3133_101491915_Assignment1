@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
     updated_at: { type: Date, default: Date.now }
 });
 
-userSchema.pre('save', function(next) {
+// Mongoose v7+ — no next() needed
+userSchema.pre('save', function () {
     this.updated_at = new Date();
-    next();
 });
 
 module.exports = mongoose.model('User', userSchema);

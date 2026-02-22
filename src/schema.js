@@ -57,7 +57,11 @@ const typeDefs = gql`
     login(input: LoginInput!): AuthPayload!
     getAllEmployees: [Employee!]!
     getEmployeeById(eid: ID!): Employee
-    searchEmployees(designation: String, department: String): [Employee!]!
+    searchEmployees(
+    designation: String, 
+    department: String, 
+    first_name: String, 
+    last_name: String ): [Employee!]!
   }
 
   type Mutation {
