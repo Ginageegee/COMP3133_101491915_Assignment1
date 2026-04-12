@@ -9,7 +9,7 @@ const employeeSchema = new mongoose.Schema({
     salary:       { type: Number, required: true, min: 1000 },
     date_of_joining: { type: Date, required: true },
     department:   { type: String, required: true },
-    employee_photo: { type: String },
+    employee_photo: String,
     created_at:   { type: Date, default: Date.now },
     updated_at:   { type: Date, default: Date.now }
 });
