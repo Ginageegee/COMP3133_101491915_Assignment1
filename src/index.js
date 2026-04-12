@@ -10,28 +10,35 @@ const authContext = require('./middleware/auth');
 const startServer = async () => {
     const app = express();
 
-    // Enable CORS (allow frontend to connect)
-    app.use(cors());
+    const corsOptions = {
+        origin: '*',
+        methods: ['GET', 'POST', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization']
+    };
 
-    // Optional: root route (so "/" doesn't error)
+    app.use(cors(corsOptions));
+    app.options('*', cors(corsOptions));
+
     app.get('/', (req, res) => {
         res.send('Backend is running');
     });
 
-    // Connect MongoDB
     await connectDB();
 
-    // Create Apollo Server
     const server = new ApolloServer({
         typeDefs,
         resolvers,
         context: ({ req }) => authContext(req),
-        cache: "bounded" // prevents warning about unbounded cache
+        cache: 'bounded'
     });
 
     await server.start();
 
-    server.applyMiddleware({ app, path: '/graphql' });
+    server.applyMiddleware({
+        app,
+        path: '/graphql',
+        cors: false
+    });
 
     const PORT = process.env.PORT || 4000;
 
