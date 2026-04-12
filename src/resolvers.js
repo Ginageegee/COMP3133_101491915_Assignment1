@@ -49,9 +49,17 @@ const resolvers = {
 
         async searchEmployees(_, { designation, department }, { user }) {
             if (!user) throw new AuthenticationError('Unauthorized');
+
             const filter = {};
-            if (designation) filter.designation = designation;
-            if (department) filter.department = department;
+
+            if (designation) {
+                filter.designation = { $regex: designation, $options: 'i' };
+            }
+
+            if (department) {
+                filter.department = { $regex: department, $options: 'i' };
+            }
+
             return Employee.find(filter);
         }
     },
